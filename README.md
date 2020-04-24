@@ -1,2 +1,5 @@
-# Data-Structures
-This is a Repository for the Data Structures in C which I have learnt till now
+# Data Structures #
+
+|S. No|Data Structure|Folder Name|
+|:---:|:------------:|:---------:|
+|1|Hash Tables/Hashing|hash_tables|
