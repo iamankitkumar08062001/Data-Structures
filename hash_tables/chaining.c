@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//assumpyion - data and key are same
+//Assumption - data and key are same
 struct node{
 	int data;
 	struct node *next;
@@ -39,7 +39,7 @@ int main()
 			case 4: print_keys(&hash_table,m);
 					break;
 			case 5: printf("Thank you for using my Program!!!\n");
-					printf("Developed by BizzareKumar\n\n");
+					printf("Developed by Ankit Kumar\n\n");
 					break;
 			default: printf("Invalid Choice!!!");
 					break;
