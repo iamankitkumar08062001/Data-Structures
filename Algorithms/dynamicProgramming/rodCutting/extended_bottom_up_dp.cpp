@@ -2,7 +2,7 @@
 #include<climits>
 
 //This is a program to illustrates Rod cutting through a DP soln
-//The below implementation doesn't return solution pieces it just returns the maximum price 
+//The below implementation is extended to returns solution pieces also
 
 using namespace std;
 typedef unsigned long long int UINT;
@@ -17,7 +17,7 @@ class utility {
 };
 
 //Solution
-UINT cut_rod(UINT n, vector<UINT> &price);
+string cut_rod(UINT n, vector<UINT> &price);
 
 //Driver Function
 int main() {
@@ -35,32 +35,47 @@ int main() {
         cin >> price[i];
     }
 
-    cout << "\nThe maximum revenue obtainable is " + to_string(cut_rod(n, price)) << "\n";
+    cout << "\nThe optimal cut is " + cut_rod(n, price) << "\n";
 
     return 0;
 }
 
 //Function Definitions
 
-UINT cut_rod(UINT n, vector<UINT> &price) {
+string cut_rod(UINT n, vector<UINT> &price) {
     if(n == 0) {
-        return 0;
+        return to_string(0);
     }
     else if(n == 1) {
-        return price[1];
+        return to_string(n) + " + " + to_string(0);
     }
     else {
-         vector<UINT> optimal_solutions(n + 1);
+        vector<UINT> optimal_solutions(n + 1);
         optimal_solutions[0] = 0;
         optimal_solutions[1] = price[1];
 
+        vector<string> solns(n + 1, "");
+        solns[0] = to_string(0);
+        solns[1] = to_string(1);
+    
+        UINT max;
+
         for(UINT i = 2; i <= n; i++) {
             optimal_solutions[i] = price[i];
+        
+            solns[i] = to_string(i);
+
             for(UINT j = 1; j <= (n/2); j++) {
-                optimal_solutions[i] = utility::max(optimal_solutions[i], price[j] + optimal_solutions[i - j]);
+                max = utility::max(optimal_solutions[i], price[j] + optimal_solutions[i - j]);
+            
+                if(max != optimal_solutions[i]) {
+                    solns[i] = to_string(j) + " + " + solns[i - j];
+                }
+            
+                optimal_solutions[i] = max;
             }
         }
 
-        return optimal_solutions[n];
+        return solns[n];
     }
 }
