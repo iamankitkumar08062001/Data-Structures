@@ -50,13 +50,13 @@ UINT cut_rod(UINT n, vector<UINT> &price) {
         return price[1];
     }
     else {
-         vector<UINT> optimal_solutions(n + 1);
+        vector<UINT> optimal_solutions(n + 1);
         optimal_solutions[0] = 0;
         optimal_solutions[1] = price[1];
 
         for(UINT i = 2; i <= n; i++) {
             optimal_solutions[i] = price[i];
-            for(UINT j = 1; j <= (n/2); j++) {
+            for(UINT j = 1; j <= (i/2); j++) {
                 optimal_solutions[i] = utility::max(optimal_solutions[i], price[j] + optimal_solutions[i - j]);
             }
         }

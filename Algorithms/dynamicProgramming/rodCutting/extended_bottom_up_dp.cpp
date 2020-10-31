@@ -65,7 +65,7 @@ string cut_rod(UINT n, vector<UINT> &price) {
         
             solns[i] = to_string(i);
 
-            for(UINT j = 1; j <= (n/2); j++) {
+            for(UINT j = 1; j <= (i/2); j++) {
                 max = utility::max(optimal_solutions[i], price[j] + optimal_solutions[i - j]);
             
                 if(max != optimal_solutions[i]) {
