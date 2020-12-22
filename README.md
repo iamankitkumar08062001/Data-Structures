@@ -1,2 +1,2 @@
-# Data Structures And Algorithms in C #
+# Data Structures And Algorithms in C/C++ #
 - Documentation will be added soon
