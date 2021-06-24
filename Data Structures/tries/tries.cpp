@@ -43,6 +43,13 @@ class Trie {
         return keys;
     }
 
+    TrieNode* prefix(TrieNode* root, int pos, string str) {
+        if(pos == str.length()) return root;
+
+        if(root->links[str[pos] - 'a'] == nullptr) return nullptr;
+        else return prefix(root->links[str[pos] - 'a'], pos + 1, str);
+    }
+
     void delete_key(TrieNode* &root, int pos, string str) {
         if(pos != str.length()) {
             delete_key(root->links[str[pos] - 'a'], pos + 1, str);
@@ -66,6 +73,17 @@ class Trie {
         }
 
         return;
+    }
+
+    bool search(TrieNode *root, int pos, string key) {
+        if(pos == key.length()) {
+            if(root->value != -1) return true;
+            else return false;
+        }
+        else {
+            if(root->links[key[pos] - 'a'] == nullptr) return false;
+            else return search(root->links[key[pos] - 'a'], pos + 1, key);
+        }
     }
 
     //Procedures to print the keys
@@ -107,13 +125,29 @@ class Trie {
         return;
     }
 
+    bool search(string key) {
+        return search(this->root, 0, key);
+    }
+
     void delete_key(string str) {
         delete_key(this->root->links[str[0] - 'a'], 1, str);
         return;
     }
+
+    TrieNode* prefix(string str) {
+        return prefix(this->root, 0, str);
+    }
     
     list<string> collect_keys() {
-        return collect_keys(this->root, "");
+        return collect_keys(prefix(""), "");
+    }
+    
+    list<string> collect_keys(string ptr) {
+        list<string> keys = collect_keys(prefix(ptr), "");
+        for(auto it = keys.begin(); it != keys.end(); it++) {
+            *it = ptr + *it;
+        }
+        return keys;
     }
 };
 
@@ -122,16 +156,14 @@ int main() {
     t->insert_key("shell", 1);
     t->insert_key("shellsort", 2);
     t->insert_key("trie", 3);
-    t->insert_key("dbms", 4);
-    
+
     list<string> keys = t->collect_keys();
     for(auto it = keys.begin(); it != keys.end(); it++) {
         cout << *it << " ";
     }
     cout << "\n";
 
-    t->delete_key("dbms");
-    keys = t->collect_keys();
+    keys = t->collect_keys("sh");
     for(auto it = keys.begin(); it != keys.end(); it++) {
         cout << *it << " ";
     }
